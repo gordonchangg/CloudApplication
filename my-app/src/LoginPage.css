@@ -44,6 +44,21 @@ body {
   .login-page button:hover {
     background-color: #0056b3;
   }
+
+  .register-button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+  .register-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
   
   .guest-link {
     text-decoration: none;

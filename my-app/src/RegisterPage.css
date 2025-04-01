@@ -1,0 +1,48 @@
+/* src/RegisterPage.css */
+
+.register-page {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically */
+  height: 100vh; /* Full viewport height */
+  background-color: #f9f9f9; /* Background color */
+  text-align: center; /* Center text inside elements */
+}
+
+.register-page h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.register-page input,
+.register-page button {
+  width: 100%; /* Make inputs and buttons full-width within their container */
+  max-width: 300px; /* Limit the maximum width */
+  padding: 10px;
+  margin-bottom: 15px; /* Add space between elements */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.register-page button {
+  background-color: #28a745; /* Green for registration */
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.register-page button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.login-link {
+  text-decoration: none;
+  color: #007bff; /* Blue for links */
+  font-weight: bold;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
