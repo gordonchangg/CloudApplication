@@ -134,6 +134,21 @@
   background-color: #0056b3;
 }
 
+/* Remove button styles */
+button {
+  padding: 5px 10px;
+  background-color: #ff4d4d; /* Red color for removal */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
+
 .cart {
   margin-top: 20px;
   text-align: right;
@@ -187,4 +202,19 @@
   padding: 10px;
   margin-bottom: 5px;
   border-radius: 5px;
+}
+
+.cart-sidebar button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #007bff; /* Blue color for action */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.cart-sidebar button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
