@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./MainPage.css";
 import { fetchProducts } from "./data/products"; // Import the fetchProducts function
+import LoadingScreen from "./LoadingScreen";
+import Header from "./Header";
 
 import { db } from "./firebase"; // Import Firestore
 import { collection, getDocs, doc, updateDoc, increment } from "firebase/firestore";
@@ -12,11 +14,14 @@ function MainPage() {
   const [cart, setCart] = useState([]); // Cart state
   const [selectedProduct, setSelectedProduct] = useState(null); // Selected product for the modal
   const [products, setProducts] = useState([]); // State to hold fetched products
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const loadProducts = async () => {
       const fetchedProducts = await fetchProducts();
       setProducts(fetchedProducts);
+      setLoading(false);
     };
 
     loadProducts();
@@ -30,7 +35,7 @@ function MainPage() {
   // Function to add a product to the cart
   const addToCart = (product) => {
     setCart([...cart, product]); // Add the product to the cart
-    alert(`${product.name} added to cart!`); // Optional: Notify the user
+    // alert(`${product.name} added to cart!`); // Optional: Notify the user
     setSelectedProduct(null); // Close the modal after adding
   };
 
@@ -60,29 +65,22 @@ function MainPage() {
         });
       }
 
-      alert(`Order placed successfully! Total: $${calculateTotalPrice()}`);
+      // alert(`Order placed successfully! Total: $${calculateTotalPrice()}`);
       setCart([]); // Clear the cart after placing the order
     } catch (error) {
-      console.error("Error updating product counts:", error);
+      console.error("Error updating productproduct counts:", error);
       alert("An error occurred while placing the order.");
     }
+    
   };
-
+  if (loading) return <LoadingScreen />;
   return (
     <div className="app">
+        <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       {/* Header with Title and Search Bar */}
-      <header>
-        <h1>Food Ordering App</h1>
-        <input
-          type="text"
-          placeholder="Search for products..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </header>
-
+      
       {/* Cart Sidebar */}
-      <aside className="cart-sidebar">
+      {/* <aside className="cart-sidebar">
         <h3>Cart ({cart.length})</h3>
         <ul>
           {cart.map((item, index) => (
@@ -94,12 +92,30 @@ function MainPage() {
         </ul>
         <h4>Total: ${calculateTotalPrice()}</h4>
         <button onClick={placeOrder}>Place Order</button>
-      </aside>
+      </aside> */}
 
       {/* Main Content */}
-      <main>
-        <h2>Menu</h2>
-        <div className="product-grid">
+      <div class="menu-container">
+      <aside class="category-sidebar">
+      <h2>Categoriess</h2>
+      <ul>
+        <li><a hre  f="#">Fruit Cakes</a></li>
+        <li><a href="#">Chocolate Cakes</a></li>
+        <li><a href="#">Specialty Cakes</a></li>
+        <li><a href="#">Cupcakes</a></li>
+        <li><a href="#">Vegan & Sugar-Free</a></li>
+      </ul>
+    </aside>
+
+      <main  class="cake-section">
+        <h2> Our Menu</h2>
+        <input
+          type="text"
+          placeholder="Search for products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <div class="cake-grid">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
@@ -109,7 +125,7 @@ function MainPage() {
             >
               <img src={product.image} alt={product.name} />
               <h3>{product.name}</h3>
-              <p>{product.description}</p>
+              <p className="cake-description">{product.description}</p>
               <p className="price">${product.price.toFixed(2)}</p>
             </div>
           ))}
@@ -136,6 +152,7 @@ function MainPage() {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 }
