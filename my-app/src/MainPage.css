@@ -1,4 +1,11 @@
-body {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+
+  body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -32,31 +39,26 @@ body {
     display: block;
   }
   
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
-  
   .product-card {
-    background: #fff;
+    background-color: #fff;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
     padding: 15px;
     text-align: center;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effect */
+    cursor: pointer; /* Indicate clickable area */
   }
   
   .product-card:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Slightly enlarge the card on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
   }
   
   .product-card img {
     width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 5px;
+    height: auto;
     margin-bottom: 10px;
+    border-radius: 5px;
   }
   
   .product-card h3 {
@@ -74,3 +76,115 @@ body {
     font-weight: bold;
     color: #333;
   }
+
+  /* Modal styles */
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  position: relative;
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #ff4d4d;
+}
+
+.modal button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.modal button:hover {
+  background-color: #0056b3;
+}
+
+.cart {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.cart h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.cart ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart li {
+  background-color: #f9f9f9;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+/* Cart sidebar styles */
+.cart-sidebar {
+  position: fixed; /* Fixed position on the right */
+  top: 0;
+  right: 0;
+  width: 300px; /* Width of the cart */
+  height: 100vh; /* Full height */
+  background-color: #ffffff;
+  box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1); /* Shadow on the left */
+  padding: 20px;
+  overflow-y: auto; /* Add a scrollbar if content overflows */
+  z-index: 200; /* Ensure the cart stays above other elements */
+}
+
+.cart-sidebar h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.cart-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cart-sidebar li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
