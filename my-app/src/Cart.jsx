@@ -3,7 +3,7 @@ import "./Cart.css";
 import Header from "./Header";
 
 
-function Cart({ cart = [], removeFromCart, placeOrder }) {
+function Cart({ cart, removeFromCart, placeOrder }) {
     const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
 
   return (
