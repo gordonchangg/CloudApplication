@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./home.css"; // Your original CSS
 import Header from "./Header"; // Assuming you've separated the header
@@ -19,6 +20,12 @@ function Home() {
   const sortedProducts = [...products].sort((a, b) => b.count - a.count);
 
   const topProducts = sortedProducts.slice(0, 3);
+
+  const navigate = useNavigate();
+
+  const handleMenuClick = () => {
+    navigate("/main"); // Navigate to the Register Page
+  };
   
 return (
     <div className="app">
@@ -28,7 +35,7 @@ return (
         <div className="hero-text">
           <h1>NEW! Japan Season Bakes</h1>
           <p>sakura season bakes</p>
-          <button>View Menu</button>
+          <button onClick={handleMenuClick}>View Menu</button>
         </div>
         <img
           src="https://source.unsplash.com/500x400/?cake,raspberry"
