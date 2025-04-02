@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Header() {
   const styles = {
@@ -24,12 +25,16 @@ function Header() {
       fontWeight: "bold"
     },
     button: {
-      backgroundColor: "white",
-      color: "#D04C65",
-      border: "none",
-      padding: "10px 20px",
-      borderRadius: "25px",
-      cursor: "pointer"
+        backgroundColor: "white",
+        color: "#D04C65",
+        border: "none",
+        padding: "10px 20px",
+        borderRadius: "25px",
+        cursor: "pointer",
+        fontWeight: "bold",
+        textAlign: "center",
+        textDecoration: "none", // removes underline
+        display: "inline-block" // ensures it behaves like a button
     }
   };
 
@@ -37,11 +42,11 @@ function Header() {
     <header style={styles.header}>
       <div style={styles.logo}>Cake Bliss</div>
       <nav style={styles.nav}>
-        <a href="/home" style={styles.link}>Home</a>
-        <a href="/menu" style={styles.link}>Menu</a>
+        <Link to="/home" style={styles.link}>Home</Link>
+        <Link to="/main" style={styles.link}>Menu</Link>
         <a href="#" style={styles.link}>Contact</a>
       </nav>
-      <button style={styles.button}>Cart</button>
+      <Link to="/cart" style={styles.button}>Cart</Link>
     </header>
   );
 }

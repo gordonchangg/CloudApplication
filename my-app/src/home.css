@@ -1,0 +1,143 @@
+:root {
+  --pink: #FFCBCB;
+  --deep-pink: #D04C65;
+  --light-gray: #f8f8f8;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--pink);
+  color: #333;
+}
+
+
+.order-btn {
+  background-color: var(--deep-pink);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--pink);
+  padding: 60px 20px;
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  color: var(--deep-pink);
+}
+
+.hero-text p {
+  font-size: 18px;
+  margin: 15px 0;
+}
+
+.hero-text button {
+  background-color: var(--deep-pink);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px 20px;
+  background: white;
+  text-align: center;
+}
+
+.feature img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+.cakes {
+  padding: 60px 20px;
+  background: var(--light-gray);
+  text-align: center;
+}
+
+.cake-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.cake-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 280px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.cake-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.cake-card h3 {
+  margin: 10px 0;
+}
+
+.cake-card span {
+  display: block;
+  margin: 10px 0;
+  color: var(--deep-pink);
+  font-weight: bold;
+}
+
+.cake-card button {
+  background-color: var(--deep-pink);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.ingredients {
+  padding: 60px 20px;
+  text-align: center;
+  background: var(--pink);
+}
+
+.ingredients img {
+  max-width: 90%;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.ingredients button {
+  background-color: var(--deep-pink);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+footer {
+  background: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+}
+
+
