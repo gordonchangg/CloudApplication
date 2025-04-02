@@ -67,11 +67,7 @@ function App() {
           path="/main"
           element={
             <MainPage
-              cart={cart}
-              calculateTotalPrice={calculateTotalPrice}
               addToCart={addToCart}
-              removeFromCart={removeFromCart}
-              placeOrder={placeOrder}
             />
           }
         />

@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import "./MainPage.css";
 import { fetchProducts } from "./data/products"; // Import the fetchProducts function
 
-import { db } from "./firebase"; // Import Firestore
-import { collection, getDocs, doc, updateDoc, increment } from "firebase/firestore";
 import Header from "./Header"; // Assuming you've separated the header
 
 
 
-function MainPage({cart, calculateTotalPrice, addToCart, removeFromCart, placeOrder}) {
+function MainPage({addToCart}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null); // Selected product for the modal
   const [products, setProducts] = useState([]); // State to hold fetched products
@@ -22,51 +20,9 @@ function MainPage({cart, calculateTotalPrice, addToCart, removeFromCart, placeOr
     loadProducts();
   }, []);
 
-
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  // // Function to add a product to the cart
-  // const addToCart = (product) => {
-  //   setCart([...cart, product]); // Add the product to the cart
-  //   alert(`${product.name} added to cart!`); // Optional: Notify the user
-  //   setSelectedProduct(null); // Close the modal after adding
-  // };
-
-  // // Function to remove a product from the cart
-  // const removeFromCart = (productId) => {
-  //   setCart(cart.filter((item) => item.id !== productId)); // Remove item with matching id
-  // };
-
-  // // Function to calculate the total price of the cart
-  // const calculateTotalPrice = () => {
-  //   return cart.reduce((total, item) => total + item.price, 0).toFixed(2);
-  // };
-
-  // // Function to place an order
-  // const placeOrder = async () => {
-  //   if (cart.length === 0) {
-  //     alert("Your cart is empty. Add items to place an order.");
-  //     return;
-  //   }
-
-  //   try {
-  //     // Update the count for each product in the cart
-  //     for (const item of cart) {
-  //       const productRef = doc(db, "products", item.id.toString()); // Reference the product document
-  //       await updateDoc(productRef, {
-  //         count: increment(1), // Increment the count by 1
-  //       });
-  //     }
-
-  //     alert(`Order placed successfully! Total: $${calculateTotalPrice()}`);
-  //     setCart([]); // Clear the cart after placing the order
-  //   } catch (error) {
-  //     console.error("Error updating product counts:", error);
-  //     alert("An error occurred while placing the order.");
-  //   }
-  // };
 
   return (
     

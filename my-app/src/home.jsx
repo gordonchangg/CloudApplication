@@ -1,9 +1,26 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import "./home.css"; // Your original CSS
 import Header from "./Header"; // Assuming you've separated the header
+import { fetchProducts } from "./data/products"; // Import the fetchProducts function
 
 function Home() {
-  return (
+  const [products, setProducts] = useState([]); // State to hold fetched products
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const fetchedProducts = await fetchProducts();
+      setProducts(fetchedProducts);
+    };
+
+    loadProducts();
+  }, []);
+
+  const sortedProducts = [...products].sort((a, b) => b.count - a.count);
+
+  const topProducts = sortedProducts.slice(0, 3);
+  
+return (
     <div className="app">
       <Header />
 
@@ -37,27 +54,15 @@ function Home() {
       <section className="cakes">
         <h2>Just Look at These Cakes!</h2>
         <div className="cake-grid">
-          <div className="cake-card">
-            <img src="https://source.unsplash.com/300x200/?cake,strawberry" alt="Strawberry Cake" />
-            <h3>Strawberry Delight</h3>
-            <p>Fresh strawberry layers with whipped cream.</p>
-            <span>$25.00</span>
-            <button>Buy</button>
-          </div>
-          <div className="cake-card">
-            <img src="https://source.unsplash.com/300x200/?cake,blueberry" alt="Blueberry Cake" />
-            <h3>Blueberry Bliss</h3>
-            <p>Light vanilla base with fresh blueberries.</p>
-            <span>$25.00</span>
-            <button>Buy</button>
-          </div>
-          <div className="cake-card">
-            <img src="https://source.unsplash.com/300x200/?cake,raspberry" alt="Raspberry Cake" />
-            <h3>Raspberry Cream</h3>
-            <p>Creamy raspberry layers with zero guilt.</p>
-            <span>$25.00</span>
-            <button>Buy</button>
-          </div>
+          {topProducts.map((product) => (
+            <div key={product.id} className="cake-card">
+              <img src={product.image} alt={product.name} />
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <span>${product.price.toFixed(2)}</span>
+              <button>Buy</button>
+            </div>
+          ))}
         </div>
       </section>
 
