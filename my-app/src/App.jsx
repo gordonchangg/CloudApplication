@@ -1,15 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./LoginPage";
 import MainPage from "./MainPage";
 import RegisterPage from "./RegisterPage";
 import HomePage from "./home";
 import CartPage from "./Cart";
-import { db } from "./firebase"; // Import Firestore
-import { collection, getDocs, doc, updateDoc, increment } from "firebase/firestore";
+import { db, auth } from "./firebase"; // Import Firestore
+import { collection, getDocs, doc, updateDoc, increment, arrayUnion, getDoc, setDoc } from "firebase/firestore";
 
 function App() {
   const [cart, setCart] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // Set the user object if logged in
+      } else {
+        setUser(null); // Clear the user object if logged out
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup the listener on unmount
+  }, []);
 
   // Function to add a product to the cart
   const addToCart = (product, onCloseModal) => {
@@ -38,20 +51,50 @@ function App() {
       alert("Your cart is empty. Add items to place an order.");
       return;
     }
-
+  
     try {
       // Update the count for each product in the cart
       for (const item of cart) {
-        const productRef = doc(db, "products", item.id.toString()); // Reference the product document
+        const productRef = doc(db, "products", item.id.toString());
         await updateDoc(productRef, {
-          count: increment(1), // Increment the count by 1
+          count: increment(1),
         });
       }
-
-      alert(`Order placed successfully! Total: $${calculateTotalPrice()}`);
+  
+      const totalPrice = parseFloat(calculateTotalPrice());
+  
+      if (user) {
+        const userRef = doc(db, "UserData", user.uid);
+  
+        // Check if the user document exists
+        const userDoc = await getDoc(userRef);
+        if (!userDoc.exists()) {
+          // If the user doesn't exist, create a new document
+          await setDoc(userRef, {
+            email: user.email,
+            orderHistory: [], // Initialize as an empty array
+            totalSpent: 0,
+          });
+        }
+  
+        // Create an order object for each item in the cart
+        const orderSummary = cart.map((item) => ({
+          name: item.name,
+          price: item.price.toFixed(2),
+          timestamp: new Date().toISOString(), // Add a timestamp
+        }));
+  
+        // Append the new orders to the orderHistory array
+        await updateDoc(userRef, {
+          orderHistory: arrayUnion(...orderSummary), // Append the new order objects
+          totalSpent: increment(totalPrice), // Increment totalSpent
+        });
+      }
+  
+      alert(`Order placed successfully! Total: $${totalPrice}`);
       setCart([]); // Clear the cart after placing the order
     } catch (error) {
-      console.error("Error updating product counts:", error);
+      console.error("Error placing order:", error);
       alert("An error occurred while placing the order.");
     }
   };
@@ -60,13 +103,14 @@ function App() {
     <Router>
       <Routes>
         {/* Default route redirects to /login */}
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route
           path="/main"
           element={
             <MainPage
+              user={user}
               addToCart={addToCart}
             />
           }

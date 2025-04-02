@@ -6,7 +6,7 @@ import Header from "./Header"; // Assuming you've separated the header
 
 
 
-function MainPage({addToCart}) {
+function MainPage({user, addToCart}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null); // Selected product for the modal
   const [products, setProducts] = useState([]); // State to hold fetched products
@@ -18,7 +18,12 @@ function MainPage({addToCart}) {
     };
 
     loadProducts();
-  }, []);
+
+    // Log the user's email or UID for debugging
+    if (user) {
+      console.log("Logged in as:", user.email || user.uid);
+    }
+  }, [user]);
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())

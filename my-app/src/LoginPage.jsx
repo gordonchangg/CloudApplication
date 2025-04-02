@@ -17,7 +17,7 @@ function LoginPage() {
       // Sign in with Firebase
       await signInWithEmailAndPassword(auth, email, password);
       alert("Login successful!");
-      navigate("/main"); // Redirect to the main page
+      navigate("/home"); // Redirect to the main page
     } catch (error) {
       alert("Login failed: " + error.message);
     }
