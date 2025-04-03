@@ -24,6 +24,7 @@ function RegisterPage() {
   };
 
   return (
+    <div className="login-container">
     <div className="register-page">
       <h1>Register</h1>
       <form onSubmit={handleRegister}>
@@ -49,6 +50,7 @@ function RegisterPage() {
           Login here
         </Link>
       </p>
+    </div>
     </div>
   );
 }

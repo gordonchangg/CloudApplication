@@ -1,45 +1,63 @@
 /* src/RegisterPage.css */
 
-.register-page {
+.register-container {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #ffe6eb, #ffd6e0);
   display: flex;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  height: 100vh; /* Full viewport height */
-  background-color: #f9f9f9; /* Background color */
-  text-align: center; /* Center text inside elements */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.register-page {
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
 }
 
 .register-page h1 {
   font-size: 2rem;
-  margin-bottom: 20px;
+  color: #D04C65; /* Cake Bliss deep pink */
+  margin-bottom: 30px;
 }
+
 
 .register-page input,
 .register-page button {
-  width: 100%; /* Make inputs and buttons full-width within their container */
-  max-width: 300px; /* Limit the maximum width */
-  padding: 10px;
-  margin-bottom: 15px; /* Add space between elements */
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 2px solid #FFD6DC;
+  border-radius: 10px;
   font-size: 1rem;
+  transition: border-color 0.2s ease;
 }
 
+.register-page input:focus {
+  border-color: #D04C65;
+  outline: none;
+}
+
+
 .register-page button {
-  background-color: #28a745; /* Green for registration */
-  color: white;
-  border: none;
-  cursor: pointer;
+  border-color: #D04C65;
+  background-color: #D04C65;
+  outline: none;
 }
 
 .register-page button:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #b03b55;
 }
 
 .login-link {
   text-decoration: none;
-  color: #007bff; /* Blue for links */
+  color: #b03b55;
   font-weight: bold;
 }
 
