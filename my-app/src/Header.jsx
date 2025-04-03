@@ -13,7 +13,7 @@ function Header() {
     logo: {
       fontSize: "24px",
       fontWeight: "bold",
-      color: "white" // deep-pink
+      color: "white"
     },
     nav: {
       display: "flex",
@@ -24,17 +24,21 @@ function Header() {
       color: "white",
       fontWeight: "bold"
     },
+    buttons: {
+      display: "flex",
+      gap: "10px"
+    },
     button: {
-        backgroundColor: "white",
-        color: "#D04C65",
-        border: "none",
-        padding: "10px 20px",
-        borderRadius: "25px",
-        cursor: "pointer",
-        fontWeight: "bold",
-        textAlign: "center",
-        textDecoration: "none", // removes underline
-        display: "inline-block" // ensures it behaves like a button
+      backgroundColor: "white",
+      color: "#D04C65",
+      border: "none",
+      padding: "10px 20px",
+      borderRadius: "25px",
+      cursor: "pointer",
+      fontWeight: "bold",
+      textAlign: "center",
+      textDecoration: "none",
+      display: "inline-block"
     }
   };
 
@@ -46,7 +50,10 @@ function Header() {
         <Link to="/main" style={styles.link}>Menu</Link>
         <a href="#" style={styles.link}>Contact</a>
       </nav>
-      <Link to="/cart" style={styles.button}>Cart</Link>
+      <div style={styles.buttons}>
+        <Link to="/cart" style={styles.button}>Cart</Link>
+        <Link to="/login" style={styles.button}>Login</Link>
+      </div>
     </header>
   );
 }

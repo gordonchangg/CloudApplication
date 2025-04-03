@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./MainPage.css";
 import { fetchProducts } from "./data/products"; // Import the fetchProducts function
+import LoadingScreen from "./LoadingScreen";
 
 import Header from "./Header"; // Assuming you've separated the header
 
@@ -10,11 +11,14 @@ function MainPage({user, addToCart}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null); // Selected product for the modal
   const [products, setProducts] = useState([]); // State to hold fetched products
+  const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
     const loadProducts = async () => {
       const fetchedProducts = await fetchProducts();
       setProducts(fetchedProducts);
+      setLoading(false);
     };
 
     loadProducts();
@@ -28,26 +32,35 @@ function MainPage({user, addToCart}) {
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  if (loading) return <LoadingScreen />;
 
   return (
     
     <div className="app">
       {/* Header with Title and Search Bar */}
       <Header />
-
-      <header>
-        <input
-          type="text"
-          placeholder="Search for products..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </header>
+      <div className="menu-container">
+        <aside className="category-sidebar">
+          <h2>Categories</h2>
+          <ul>
+            <li><a href="#">Fruit Cakes</a></li>
+            <li><a href="#">Chocolate Cakes</a></li>
+            <li><a href="#">Specialty Cakes</a></li>
+            <li><a href="#">Cupcakes</a></li>
+            <li><a href="#">Vegan & Sugar-Free</a></li>
+          </ul>
+        </aside>
 
       {/* Main Content */}
-      <main>
-        <h2>Menu</h2>
-        <div className="product-grid">
+      <main className="main-content">
+      <h2>Our Menu</h2>
+          <input
+            type="text"
+            placeholder="Search for products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        <div className="cake-grid">
           {filteredProducts.map((product) => (
             <div
               key={product.id}
@@ -87,9 +100,12 @@ function MainPage({user, addToCart}) {
             </button>
           </div>
         </div>
+        
       )}
+      </div>
     </div>
   );
+  
 }
 
 export default MainPage;

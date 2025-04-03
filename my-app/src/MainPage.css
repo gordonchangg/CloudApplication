@@ -115,6 +115,7 @@ input:focus {
 
   
   .product-card {
+    flex: 1;
     background-color: #fff;
     border: 1px solid #ddd;
     width: 250px;
@@ -136,7 +137,9 @@ input:focus {
     margin-bottom: 10px;
     border-radius: 5px;
   }
-  
+.main-content {
+    margin: 20px;
+  }
   .product-card h3 {
     margin: 15px 0 8px;
     color: var(--deep-pink); /* Use the deep pink color for product titles */
