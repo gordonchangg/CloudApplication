@@ -1,7 +1,38 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { auth } from "./firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function Header() {
+  const [username, setUsername] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const name = user.email.split("@")[0];
+        setUsername(name);
+      } else {
+        setUsername(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        setShowDropdown(false);
+        alert("Logged out!");
+      })
+      .catch((error) => {
+        console.error("Logout error:", error.message);
+      });
+  };
+
   const styles = {
     header: {
       background: "#D04C65",
@@ -26,7 +57,38 @@ function Header() {
     },
     buttons: {
       display: "flex",
-      gap: "10px"
+      gap: "10px",
+      alignItems: "center",
+      position: "relative"
+    },
+    userText: {
+      color: "white",
+      cursor: "pointer",
+      fontWeight: "bold",
+      padding: "10px 10px",
+      borderRadius: "8px",
+      userSelect: "none"
+    },
+    dropdown: {
+      position: "absolute",
+      top: "100%",
+      right: 0,
+      backgroundColor: "white",
+      border: "1px solid #ddd",
+      borderRadius: "8px",
+      marginTop: "8px",
+      boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+      zIndex: 1000
+    },
+    dropdownItem: {
+      padding: "10px 20px",
+      cursor: "pointer",
+      color: "#D04C65",
+      fontWeight: "bold",
+      textAlign: "left",
+      width: "100%",
+      backgroundColor: "white",
+      border: "none"
     },
     button: {
       backgroundColor: "white",
@@ -36,7 +98,6 @@ function Header() {
       borderRadius: "25px",
       cursor: "pointer",
       fontWeight: "bold",
-      textAlign: "center",
       textDecoration: "none",
       display: "inline-block"
     }
@@ -52,7 +113,31 @@ function Header() {
       </nav>
       <div style={styles.buttons}>
         <Link to="/cart" style={styles.button}>Cart</Link>
-        <Link to="/login" style={styles.button}>Login</Link>
+        {username ? (
+          <div>
+            <span onClick={() => setShowDropdown(!showDropdown)} style={styles.userText}>
+              Hi, {username} ▼
+            </span>
+            {showDropdown && (
+              <div style={styles.dropdown}>
+                <button onClick={handleLogout} style={styles.dropdownItem}>
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <span
+            style={styles.button}
+            onClick={() => {
+              if (!auth.currentUser) {
+                navigate("/login", { state: { from: location } });
+              }
+            }}
+          >
+            Login
+          </span>
+        )}
       </div>
     </header>
   );
