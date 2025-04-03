@@ -19,11 +19,13 @@ function Cart({ cart, removeFromCart, placeOrder }) {
         ) : (
           <ul className="cart-list">
             {cart.map((item, index) => (
-              <li key={item.id || index} className="cart-item">
-                <span>{item.name}</span>
-                <span>${item.price.toFixed(2)}</span>
-                <button className="remove-btn" onClick={() => removeFromCart(item.id)}>Remove</button>
-              </li>
+             <li key={item.id || index} className="cart-item">
+             <span className="item-name">{item.name}</span>
+             <div className="item-actions">
+               <span className="item-price">${item.price.toFixed(2)}</span>
+               <button className="remove-btn" onClick={() => removeFromCart(item.id)}>Remove</button>
+             </div>
+           </li>
             ))}
           </ul>
         )}
