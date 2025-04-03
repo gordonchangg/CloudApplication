@@ -103,9 +103,10 @@ function App() {
     <Router>
       <Routes>
         {/* Default route redirects to /login */}
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/menu" element={<MainPage />} />
         <Route
           path="/main"
           element={
