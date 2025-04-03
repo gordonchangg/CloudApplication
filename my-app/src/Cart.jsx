@@ -8,7 +8,8 @@ function Cart({ cart, removeFromCart, placeOrder }) {
 
   return (
     <>
-      <Header />
+      <Header cart={cart} />
+
       <div className="cart-page">
      
         <h2 className="cart-heading">Your Cart</h2>

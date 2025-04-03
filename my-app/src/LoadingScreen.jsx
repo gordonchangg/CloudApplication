@@ -16,9 +16,12 @@ const LoadingScreen = () => {
   };
 
   return (
+   
+
     <div style={styles.container}>
       Loading your Cake Bliss experience...
     </div>
+    
   );
 };
 

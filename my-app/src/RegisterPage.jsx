@@ -24,6 +24,8 @@ function RegisterPage() {
   };
 
   return (
+    <div className="app">
+      <Header cart={cart} />
     <div className="login-container">
     <div className="register-page">
       <h1>Register</h1>
@@ -50,6 +52,7 @@ function RegisterPage() {
           Login here
         </Link>
       </p>
+    </div>
     </div>
     </div>
   );

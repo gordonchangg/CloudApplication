@@ -3,7 +3,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { auth } from "./firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
-function Header() {
+function Header({ cart = [] }) {
+  
   const [username, setUsername] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Header() {
     signOut(auth)
       .then(() => {
         setShowDropdown(false);
-        alert("Logged out!");
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Logout error:", error.message);
@@ -100,7 +101,23 @@ function Header() {
       fontWeight: "bold",
       textDecoration: "none",
       display: "inline-block"
+    },
+    badge: {
+      position: "absolute",
+      top: "-6px",
+      right: "-6px",
+      backgroundColor: "red",
+      color: "white",
+      borderRadius: "50%",
+      padding: "4px 8px",
+      fontSize: "12px",
+      fontWeight: "bold"
+    },
+    cartWrapper: {
+      position: "relative",
+      display: "inline-block"
     }
+    
   };
 
   return (
@@ -112,33 +129,39 @@ function Header() {
         <a href="#" style={styles.link}>Contact</a>
       </nav>
       <div style={styles.buttons}>
-        <Link to="/cart" style={styles.button}>Cart</Link>
-        {username ? (
-          <div>
-            <span onClick={() => setShowDropdown(!showDropdown)} style={styles.userText}>
-              Hi, {username} ▼
-            </span>
-            {showDropdown && (
-              <div style={styles.dropdown}>
-                <button onClick={handleLogout} style={styles.dropdownItem}>
-                  Logout
-                </button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <span
-            style={styles.button}
-            onClick={() => {
-              if (!auth.currentUser) {
-                navigate("/login", { state: { from: location } });
-              }
-            }}
-          >
-            Login
-          </span>
-        )}
-      </div>
+  <div style={styles.cartWrapper}>
+    <Link to="/cart" style={styles.button}>Cart</Link>
+    {cart.length > 0 && <span style={styles.badge}>{cart.length}</span>}
+  </div>
+
+  {/* Existing user dropdown */}
+  {username ? (
+    <div>
+      <span onClick={() => setShowDropdown(!showDropdown)} style={styles.userText}>
+        Hi, {username} ▼
+      </span>
+      {showDropdown && (
+        <div style={styles.dropdown}>
+          <button onClick={handleLogout} style={styles.dropdownItem}>
+            Logout
+          </button>
+        </div>
+      )}
+    </div>
+  ) : (
+    <span
+      style={styles.button}
+      onClick={() => {
+        if (!auth.currentUser) {
+          navigate("/login", { state: { from: location } });
+        }
+      }}
+    >
+      Login
+    </span>
+  )}
+</div>
+
     </header>
   );
 }

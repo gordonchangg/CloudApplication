@@ -38,7 +38,7 @@ function App() {
 
   const addToCart = (product, onCloseModal) => {
     setCart((prevCart) => [...prevCart, product]);
-    alert(`${product.name} added to cart!`);
+    // alert(`${product.name} added to cart!`);
     if (onCloseModal) onCloseModal();
   };
 
@@ -110,10 +110,16 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/menu" element={<MainPage />} />
         <Route
-          path="/main"
-          element={<MainPage user={user} addToCart={addToCart} />}
-        />
-        <Route path="/home" element={<HomePage />} />
+  path="/main"
+  element={
+    <MainPage
+      user={user}
+      addToCart={addToCart}
+      cart={cart} // ✅ Add this line
+    />
+  }
+/>
+        <Route path="/home" element={<HomePage cart={cart} />} />
         <Route
           path="/cart"
           element={

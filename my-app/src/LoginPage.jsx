@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { auth } from "./firebase";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import "./LoginPage.css";
+import Header from "./Header";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -41,6 +42,8 @@ function LoginPage() {
   };
 
   return (
+    <>
+    <Header />
     <div className="login-container">
       <div className="login-page">
         <h1>Login</h1>
@@ -73,6 +76,7 @@ function LoginPage() {
         </p>
       </div>
     </div>
+    </>
   );
 }
 
