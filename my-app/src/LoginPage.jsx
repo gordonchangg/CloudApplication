@@ -30,7 +30,6 @@ function LoginPage() {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      alert("Login successful!");
       navigate(from, { replace: true });
     } catch (error) {
       alert("Login failed: " + error.message);
