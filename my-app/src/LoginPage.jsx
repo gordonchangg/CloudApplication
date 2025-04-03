@@ -28,6 +28,7 @@ function LoginPage() {
   };
 
   return (
+    <div className="login-container">
     <div className="login-page">
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
@@ -52,13 +53,13 @@ function LoginPage() {
       <button onClick={handleRegisterClick} className="register-button">
         Register
       </button>
-      
       <p>
         Or{" "}
         <Link to="/main" className="guest-link">
           Continue as Guest
         </Link>
       </p>
+    </div>
     </div>
   );
 }

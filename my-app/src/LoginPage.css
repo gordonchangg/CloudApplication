@@ -1,71 +1,91 @@
 /* src/LoginPage.css */
 
-/* Reset default browser styles */
-/* body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    height: 100vh; 
-    background-color: #f9f9f9;
-  }
-  
-  .login-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    text-align: center; 
-  }
-  
-  .login-page h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  
-  .login-page input,
-  .login-page button {
-    width: 100%;
-    max-width: 300px; 
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-  }
-  
-  .login-page button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .login-page button:hover {
-    background-color: #0056b3;
-  }
+.login-container {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #ffe6eb, #ffd6e0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} 
 
-  .register-button {
-    padding: 10px 20px;
-    background-color: #007bff; 
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-top: 10px;
-  }
-  
-  .register-button:hover {
-    background-color: #0056b3; 
-  }
-  
-  .guest-link {
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-  }
-  
-  .guest-link:hover {
-    text-decoration: underline;
-  } */
+.login-page {
+  background-color: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-page h1 {
+  font-size: 2rem;
+  color: #D04C65; /* Cake Bliss deep pink */
+  margin-bottom: 30px;
+}
+
+.login-page input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 2px solid #FFD6DC;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.login-page input:focus {
+  border-color: #D04C65;
+  outline: none;
+}
+
+.login-page button {
+  width: 100%;
+  background-color: #D04C65;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.login-page button:hover {
+  background-color: #b03b55;
+}
+
+.register-button {
+  margin-top: 10px;
+  background-color: #ff8ca3;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.register-button p{
+  margin-top: 10px;
+}
+
+.register-button:hover {
+  background-color: #ff7390;
+}
+
+.guest-link {
+  display: block;
+  color: #D04C65;
+  font-weight: bold;
+  text-decoration: none;
+  transition: text-decoration 0.2s ease;
+}
+
+.guest-link:hover {
+  text-decoration: underline;
+}
