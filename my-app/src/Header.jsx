@@ -151,7 +151,7 @@ function Header({ cart = [] }) {
             </span>
             {showDropdown && (
               <div style={styles.dropdown}>
-                <Link to="/orders" style={{...styles.dropdownItem, borderRadius: "8px"}}
+                <Link to="/orders" style={{...styles.dropdownItem, borderRadius: "8px", fontSize: "0.95"}}
                   onMouseEnter={(e) => (e.target.style.backgroundColor = "#f5f5f5")}
                   onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}>
                   View Orders
