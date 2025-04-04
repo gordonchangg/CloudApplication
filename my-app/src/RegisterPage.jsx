@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from "./firebase"; // Import Firebase auth
 import { createUserWithEmailAndPassword } from "firebase/auth"; // Import Firebase auth methods
 import "./RegisterPage.css";
+import Header from "./Header";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -25,7 +26,7 @@ function RegisterPage() {
 
   return (
     <div className="app">
-      <Header cart={cart} />
+      <Header />
     <div className="login-container">
     <div className="register-page">
       <h1>Register</h1>
