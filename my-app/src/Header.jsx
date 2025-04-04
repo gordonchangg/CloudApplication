@@ -4,11 +4,15 @@ import { auth } from "./firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function Header({ cart = [] }) {
-  
+
   const [username, setUsername] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const totalQuantity = cart.reduce(
+    (sum, item) => sum + (item.quantity || 0),
+    0
+  );
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -89,7 +93,12 @@ function Header({ cart = [] }) {
       textAlign: "left",
       width: "100%",
       backgroundColor: "white",
-      border: "none"
+      border: "none",
+      textDecoration: "none",
+      display: "block"
+    },
+    dropdownItemHover: {
+      backgroundColor: "#f5f5f5", // hover color
     },
     button: {
       backgroundColor: "white",
@@ -117,7 +126,7 @@ function Header({ cart = [] }) {
       position: "relative",
       display: "inline-block"
     }
-    
+
   };
 
   return (
@@ -129,38 +138,45 @@ function Header({ cart = [] }) {
         <a href="#" style={styles.link}>Contact</a>
       </nav>
       <div style={styles.buttons}>
-  <div style={styles.cartWrapper}>
-    <Link to="/cart" style={styles.button}>Cart</Link>
-    {cart.length > 0 && <span style={styles.badge}>{cart.length}</span>}
-  </div>
-
-  {/* Existing user dropdown */}
-  {username ? (
-    <div>
-      <span onClick={() => setShowDropdown(!showDropdown)} style={styles.userText}>
-        Hi, {username} ▼
-      </span>
-      {showDropdown && (
-        <div style={styles.dropdown}>
-          <button onClick={handleLogout} style={styles.dropdownItem}>
-            Logout
-          </button>
+        <div style={styles.cartWrapper}>
+          <Link to="/cart" style={styles.button}>Cart</Link>
+          {cart.length > 0 && <span style={styles.badge}>{totalQuantity}</span>}
         </div>
-      )}
-    </div>
-  ) : (
-    <span
-      style={styles.button}
-      onClick={() => {
-        if (!auth.currentUser) {
-          navigate("/login", { state: { from: location } });
-        }
-      }}
-    >
-      Login
-    </span>
-  )}
-</div>
+
+        {/* Existing user dropdown */}
+        {username ? (
+          <div>
+            <span onClick={() => setShowDropdown(!showDropdown)} style={styles.userText}>
+              Hi, {username} ▼
+            </span>
+            {showDropdown && (
+              <div style={styles.dropdown}>
+                <Link to="/orders" style={{...styles.dropdownItem, borderRadius: "8px"}}
+                  onMouseEnter={(e) => (e.target.style.backgroundColor = "#f5f5f5")}
+                  onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}>
+                  View Orders
+                </Link> 
+                <button onClick={handleLogout} style={styles.dropdownItem}
+                  onMouseEnter={(e) => (e.target.style.backgroundColor = "#f5f5f5")}
+                  onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}>
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <span
+            style={styles.button}
+            onClick={() => {
+              if (!auth.currentUser) {
+                navigate("/login", { state: { from: location } });
+              }
+            }}
+          >
+            Login
+          </span>
+        )}
+      </div>
 
     </header>
   );

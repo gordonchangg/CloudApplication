@@ -3,7 +3,7 @@ import "./MainPage.css";
 import { fetchProducts } from "./data/products";
 import LoadingScreen from "./LoadingScreen";
 import Header from "./Header";
-import { useNavigate } from "react-router-dom";   
+import { useNavigate } from "react-router-dom";
 
 function MainPage({ user, addToCart, cart }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -62,18 +62,16 @@ function MainPage({ user, addToCart, cart }) {
                 <p>{product.description}</p>
                 <p className="price">${product.price.toFixed(2)}</p>
                 <button
-  onClick={() => {
-    if (user) {
-      addToCart(product);
-    } else {
-      navigate("/login", { state: { from: "/main" } });
-    }
-  }}
->
-  Add to Cart
-</button>
-
-
+                  onClick={() => {
+                    if (user) {
+                      addToCart(product);
+                    } else {
+                      navigate("/login", { state: { from: "/main" } });
+                    }
+                  }}
+                >
+                  Add to Cart
+                </button>
               </div>
             ))}
           </div>

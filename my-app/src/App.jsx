@@ -12,6 +12,7 @@ import RegisterPage from "./RegisterPage";
 import HomePage from "./home";
 import CartPage from "./Cart";
 import LoadingScreen from "./LoadingScreen"; // optional splash
+import OrderHistoryPage from "./OrderHistory";
 import { db, auth } from "./firebase";
 import {
   doc,
@@ -37,8 +38,23 @@ function App() {
   }, []);
 
   const addToCart = (product, onCloseModal) => {
-    setCart((prevCart) => [...prevCart, product]);
-    // alert(`${product.name} added to cart!`);
+    setCart((prevCart) => {
+      // check if product already exists in cart
+      const existingItem = prevCart.find(item => item.id === product.id);
+
+      if (existingItem) {
+        // Increment quantity if exists
+        return prevCart.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        // Add new item with quantity 1
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
+
     if (onCloseModal) onCloseModal();
   };
 
@@ -47,7 +63,7 @@ function App() {
   };
 
   const calculateTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price, 0).toFixed(2);
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   const placeOrder = async () => {
@@ -78,15 +94,21 @@ function App() {
           });
         }
 
-        const orderSummary = cart.map((item) => ({
-          name: item.name,
-          price: item.price.toFixed(2),
-          timestamp: new Date().toISOString()
-        }));
+        // Create a transaction object
+        const transaction = {
+          timestamp: new Date().toISOString(),
+          order: cart.map((item) => ({
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
+          })),
+          total: totalPrice
+        };
 
+        // Append the new transaction to the orderHistory array
         await updateDoc(userRef, {
-          orderHistory: arrayUnion(...orderSummary),
-          totalSpent: increment(totalPrice)
+          orderHistory: arrayUnion(transaction), // Store the entire transaction
+          totalSpent: increment(totalPrice),
         });
       }
 
@@ -95,6 +117,23 @@ function App() {
     } catch (error) {
       console.error("Error placing order:", error);
       alert("An error occurred while placing the order.");
+    }
+  };
+
+  const getUserOrderHistories = async () => {
+    if (!user) return [];
+
+    try {
+      const userRef = doc(db, "UserData", user.uid);
+      const userDoc = await getDoc(userRef);
+
+      if (!userDoc.exists()) return [];
+
+      const userData = userDoc.data();
+      return Object.values(userData.orderHistory || {});
+    } catch (error) {
+      console.error("Error fetching user orders:", error);
+      return [];
     }
   };
 
@@ -110,15 +149,15 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/menu" element={<MainPage />} />
         <Route
-  path="/main"
-  element={
-    <MainPage
-      user={user}
-      addToCart={addToCart}
-      cart={cart} // ✅ Add this line
-    />
-  }
-/>
+          path="/main"
+          element={
+            <MainPage
+              user={user}
+              addToCart={addToCart}
+              cart={cart} // ✅ Add this line
+            />
+          }
+        />
         <Route path="/home" element={<HomePage cart={cart} />} />
         <Route
           path="/cart"
@@ -131,6 +170,10 @@ function App() {
           }
         />
         <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route
+          path="/orders"
+          element={<OrderHistoryPage getUserOrderHistories={getUserOrderHistories} />}
+        />
       </Routes>
     </Router>
   );
