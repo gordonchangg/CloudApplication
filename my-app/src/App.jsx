@@ -14,6 +14,8 @@ import CartPage from "./Cart";
 import LoadingScreen from "./LoadingScreen"; // optional splash
 import OrderHistoryPage from "./OrderHistory";
 import { db, auth } from "./firebase";
+import AdminDashboard from "./AdminDashboard";
+import PrivateRoute from "./AdminRoute";
 import {
   doc,
   updateDoc,
@@ -170,10 +172,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/login"
-          element={user ? <Navigate to="/home" replace /> : <LoginPage />}
-        />
+        {/* Public Route */}
+        <Route path="/login" element={user ? <Navigate to="/home" replace /> : <LoginPage />} />
+        {/* Admin Route */}
+        <Route path="/admin/dashboard" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/menu" element={<MainPage />} />
         <Route

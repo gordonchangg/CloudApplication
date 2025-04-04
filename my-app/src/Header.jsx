@@ -4,8 +4,8 @@ import { auth } from "./firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function Header({ cart = [] }) {
-
   const [username, setUsername] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,12 +15,19 @@ function Header({ cart = [] }) {
   );
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const name = user.email.split("@")[0];
         setUsername(name);
+        try {
+          const tokenResult = await user.getIdTokenResult();
+          setIsAdmin(!!tokenResult.claims.admin); // Check for admin claim
+        } catch (error) {
+          console.error("Error fetching token result:", error);
+        }
       } else {
         setUsername(null);
+        setIsAdmin(false); // Reset isAdmin when the user logs out
       }
     });
 
@@ -151,11 +158,19 @@ function Header({ cart = [] }) {
             </span>
             {showDropdown && (
               <div style={styles.dropdown}>
-                <Link to="/orders" style={{...styles.dropdownItem, borderRadius: "8px", fontSize: "0.95"}}
+                {isAdmin && (
+                  <Link
+                    to="/admin/dashboard"
+                    style={{ ...styles.dropdownItem, borderRadius: "8px", fontSize: "0.95em" }}
+                  >
+                    Management
+                  </Link>
+                )}
+                <Link to="/orders" style={{ ...styles.dropdownItem, borderRadius: "8px", fontSize: "0.95" }}
                   onMouseEnter={(e) => (e.target.style.backgroundColor = "#f5f5f5")}
                   onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}>
                   View Orders
-                </Link> 
+                </Link>
                 <button onClick={handleLogout} style={styles.dropdownItem}
                   onMouseEnter={(e) => (e.target.style.backgroundColor = "#f5f5f5")}
                   onMouseLeave={(e) => (e.target.style.backgroundColor = "white")}>

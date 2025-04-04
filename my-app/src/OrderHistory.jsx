@@ -54,6 +54,8 @@ const OrderHistoryPage = ({ getUserOrderHistories }) => {
                     </div>
                 ) : (
                     <div>
+                        <h2 className="order-heading">Orders</h2>
+
                         {orders.length === 0 ? (
                             <p className="order-empty">No order history found 📭</p>
                         ) : (
