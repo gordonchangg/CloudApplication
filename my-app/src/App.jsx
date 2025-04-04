@@ -1,4 +1,4 @@
-// ✅ App.jsx
+// App.jsx
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -32,21 +32,39 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
       setAuthLoading(false);
-  
-      // Auto-logout after 10 seconds if a user is logged in
-      if (currentUser) {
-        setTimeout(() => {
-          auth.signOut().then(() => {
-            window.location.reload(); // Refresh the page
-          });
-        }, 30000); // 10 seconds = 10000 milliseconds
-      }
     });
   
     return () => unsubscribe();
   }, []);
   
-
+  useEffect(() => {
+    if (!user) return;
+  
+    let timeout;
+  
+    const logoutUser = () => {
+      auth.signOut().then(() => {
+        alert("You were logged out due to inactivity.");
+        window.location.reload();
+      });
+    };
+  
+    const resetTimer = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(logoutUser, 30000); // 30 seconds
+    };
+  
+    const events = ["mousemove", "mousedown", "keydown", "scroll", "touchstart"];
+  
+    events.forEach((event) => window.addEventListener(event, resetTimer));
+    resetTimer(); // Start the timer
+  
+    return () => {
+      clearTimeout(timeout);
+      events.forEach((event) => window.removeEventListener(event, resetTimer));
+    };
+  }, [user]);    
+  
   const addToCart = (product, onCloseModal) => {
     setCart((prevCart) => {
       // check if product already exists in cart
