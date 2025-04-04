@@ -1,65 +1,81 @@
 // src/LoginPage.jsx
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { auth } from "./firebase"; // Import Firebase auth
-import { signInWithEmailAndPassword } from "firebase/auth"; // Import Firebase auth methods
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { auth } from "./firebase";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import "./LoginPage.css";
+import Header from "./Header";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/home";
+
+  // 🔁 If user is already logged in, redirect to previous page or home
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate(from, { replace: true });
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate, from]);
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
 
     try {
-      // Sign in with Firebase
       await signInWithEmailAndPassword(auth, email, password);
-      alert("Login successful!");
-      navigate("/home"); // Redirect to the main page
+      navigate(from, { replace: true });
     } catch (error) {
       alert("Login failed: " + error.message);
     }
   };
 
   const handleRegisterClick = () => {
-    navigate("/register"); // Navigate to the Register Page
+    navigate("/register");
   };
 
   return (
-    <div className="login-page">
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
+    <>
+    <Header />
+    <div className="login-container">
+      <div className="login-page">
+        <h1>Login</h1>
+        <form onSubmit={handleLogin}>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
 
-      {/* Add a button to navigate to the Register Page */}
-      <button onClick={handleRegisterClick} className="register-button">
-        Register
-      </button>
-      
-      <p>
-        Or{" "}
-        <Link to="/main" className="guest-link">
-          Continue as Guest
-        </Link>
-      </p>
+        <button onClick={handleRegisterClick} className="register-button">
+          Register
+        </button>
+        <p>
+          Or{" "}
+          <Link to="/main" className="guest-link">
+            Continue as Guest
+          </Link>
+        </p>
+      </div>
     </div>
+    </>
   );
 }
 

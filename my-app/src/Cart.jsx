@@ -4,13 +4,12 @@ import Header from "./Header";
 
 
 function Cart({ cart, removeFromCart, placeOrder }) {
-    const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2);
 
   return (
     <>
-      <Header />
+      <Header cart={cart} />
       <div className="cart-page">
-     
         <h2 className="cart-heading">Your Cart</h2>
 
         {cart.length === 0 ? (
@@ -19,9 +18,13 @@ function Cart({ cart, removeFromCart, placeOrder }) {
           <ul className="cart-list">
             {cart.map((item, index) => (
               <li key={item.id || index} className="cart-item">
-                <span>{item.name}</span>
-                <span>${item.price.toFixed(2)}</span>
-                <button className="remove-btn" onClick={() => removeFromCart(item.id)}>Remove</button>
+                <span className="item-name">{item.name} ×{item.quantity}</span>
+                <div className="item-actions">
+                  <span className="item-price">
+                    ${(item.price * item.quantity).toFixed(2)} {/* Show line total */}
+                  </span>
+                  <button className="remove-btn" onClick={() => removeFromCart(item.id)}>Remove</button>
+                </div>
               </li>
             ))}
           </ul>

@@ -15,7 +15,7 @@
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: var(--pink);
-    color: #333;
+    color: #FFCBCB;
   }
   
   .app {
@@ -115,6 +115,7 @@ input:focus {
 
   
   .product-card {
+    flex: 1;
     background-color: #fff;
     border: 1px solid #ddd;
     width: 250px;
@@ -129,6 +130,21 @@ input:focus {
     transform: scale(1.05); /* Slightly enlarge the card on hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
   }
+  .product-card button {
+    margin-top: 10px;
+    background-color: #D04C65;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .product-card button:hover {
+    background-color: #b03b55;
+  }
+  
   
   .product-card img {
     width: 100%;
@@ -136,7 +152,9 @@ input:focus {
     margin-bottom: 10px;
     border-radius: 5px;
   }
-  
+.main-content {
+    margin: 20px;
+  }
   .product-card h3 {
     margin: 15px 0 8px;
     color: var(--deep-pink); /* Use the deep pink color for product titles */

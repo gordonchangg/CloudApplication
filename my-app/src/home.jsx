@@ -5,7 +5,7 @@ import "./home.css"; // Your original CSS
 import Header from "./Header"; // Assuming you've separated the header
 import { fetchProducts } from "./data/products"; // Import the fetchProducts function
 
-function Home() {
+function Home({ cart }) {
   const [products, setProducts] = useState([]); // State to hold fetched products
 
   useEffect(() => {
@@ -28,8 +28,8 @@ function Home() {
   };
   
 return (
-    <div className="app">
-      <Header />
+    <>
+      <Header cart={cart} />
 
       <section className="hero">
         <div className="hero-text">
@@ -89,7 +89,7 @@ return (
       <footer>
         <p>&copy; 2025 Cake Bliss. Sweet and healthy, just for you.</p>
       </footer>
-    </div>
+    </>
   );
 }
 
