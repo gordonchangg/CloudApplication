@@ -32,10 +32,20 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
       setAuthLoading(false);
+  
+      // Auto-logout after 10 seconds if a user is logged in
+      if (currentUser) {
+        setTimeout(() => {
+          auth.signOut().then(() => {
+            window.location.reload(); // Refresh the page
+          });
+        }, 30000); // 10 seconds = 10000 milliseconds
+      }
     });
-
+  
     return () => unsubscribe();
   }, []);
+  
 
   const addToCart = (product, onCloseModal) => {
     setCart((prevCart) => {
