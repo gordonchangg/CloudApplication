@@ -4,13 +4,27 @@ import { fetchProducts } from "./data/products";
 import LoadingScreen from "./LoadingScreen";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
+import strawberryCake from './assets/images/strawberrycake.png';
+import raspberry from './assets/images/raspberry.png';
+import blueberry from './assets/images/blueberry.png';
 
 function MainPage({ user, addToCart, cart }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const getCakeImage = (productName) => {
+    switch (productName) {
+      case 'Strawberry Cake':
+        return strawberryCake;
+      case 'Blueberry Bliss':
+        return blueberry;
+      case 'Raspberry Cream':
+        return raspberry;
+      default:
+        return strawberryCake; // fallback image
+    }
+  };
   useEffect(() => {
     const loadProducts = async () => {
       const fetchedProducts = await fetchProducts();
@@ -18,6 +32,8 @@ function MainPage({ user, addToCart, cart }) {
       setLoading(false);
     };
 
+
+  
     loadProducts();
 
     if (user) {
@@ -57,7 +73,7 @@ function MainPage({ user, addToCart, cart }) {
           <div className="cake-grid">
             {filteredProducts.map((product) => (
               <div key={product.id} className="product-card">
-                <img src={product.image} alt={product.name} />
+                <img src={getCakeImage(product.name)} alt={product.name} />
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <p className="price">${product.price.toFixed(2)}</p>

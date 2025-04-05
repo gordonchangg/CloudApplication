@@ -39,6 +39,11 @@ body {
   font-size: 18px;
   margin: 15px 0;
 }
+.sakura-cake {
+  width: 500px;    /* or 50%, or whatever size you want */
+  height: auto;    /* keeps the aspect ratio */
+  object-fit: cover; /* optional: keeps it nicely cropped if needed */
+}
 
 .hero-text button {
   background-color: var(--deep-pink);

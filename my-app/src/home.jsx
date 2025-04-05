@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import "./home.css"; // Your original CSS
 import Header from "./Header"; // Assuming you've separated the header
 import { fetchProducts } from "./data/products"; // Import the fetchProducts function
+import fruitcake from './assets/images/fruitcake.png';
+
+
+
 
 function Home({ cart }) {
   const [products, setProducts] = useState([]); // State to hold fetched products
@@ -23,6 +27,8 @@ function Home({ cart }) {
 
   const navigate = useNavigate();
 
+
+
   const handleMenuClick = () => {
     navigate("/main"); // Navigate to the Register Page
   };
@@ -38,8 +44,9 @@ return (
           <button onClick={handleMenuClick}>View Menu</button>
         </div>
         <img
-          src="https://source.unsplash.com/500x400/?cake,raspberry"
-          alt="Cake with raspberries"
+          className="sakura-cake"
+          src="https://i.imgur.com/vrX0zGo.png"
+         
         />
       </section>
 
@@ -58,25 +65,13 @@ return (
         </div>
       </section>
 
-      <section className="cakes">
-        <h2>Just Look at These Cakes!</h2>
-        <div className="cake-grid">
-          {topProducts.map((product) => (
-            <div key={product.id} className="cake-card">
-              <img src={product.image} alt={product.name} />
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-              <span>${product.price.toFixed(2)}</span>
-              <button>Buy</button>
-            </div>
-          ))}
-        </div>
-      </section>
+     
 
       <section className="ingredients">
         <h2>The Secret is in Natural Ingredients</h2>
-        <img
-          src="https://source.unsplash.com/500x400/?cake,layered,berries"
+        <img 
+         className="sakura-cake"
+          src={fruitcake}
           alt="Layered cake with fruits"
         />
         <p>
